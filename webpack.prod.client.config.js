@@ -29,15 +29,15 @@ module.exports = {
       {
         test: /\.sass$/,
         use: extractSASS.extract({
-          notExtractLoader: 'style-loader',
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!sass-loader',
+          fallback: 'style-loader',
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!sass-loader',
         })
       },
       {
         test: /\.css$/,
         use: extractSASS.extract({
-          notExtractLoader: 'style-loader',
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!css-loader',
+          fallback: 'style-loader',
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]',
         })
       },
       {
