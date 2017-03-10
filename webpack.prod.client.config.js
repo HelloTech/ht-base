@@ -1,6 +1,9 @@
-const path = require('path');
+const {resolve} = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OfflinePlugin = require('offline-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
@@ -9,8 +12,9 @@ const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
 const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
 module.exports = {
+  context: resolve('src'),
   entry: {
-    app: "./src/index.js",
+    app: "./index.js",
     vendor: ['react', 'react-dom', 'react-helmet', 'react-router']
   },
   output: {
@@ -66,11 +70,16 @@ module.exports = {
     }),
     extractCSS,
     extractSASS,
+    new InlineManifestWebpackPlugin(),
     new ManifestPlugin({}),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
+      names: ['vendor', 'manifest'],
       minChunks: Infinity,
       filename: '[name]-[hash].min.js'
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: './containers/document/index.html'
+    }),
+    // new OfflinePlugin()
   ]
 };

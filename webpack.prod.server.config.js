@@ -4,7 +4,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: "./src/server/index.js",
   output: {
-    filename: "server.min.js",
+    filename: "server.js",
+    // filename: "server.min.js",
     publicPath: "/assets/",
     path: "build/public"
   },
@@ -38,11 +39,11 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       "NODE_ENV"
     ]),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     screw_ie8: true,
+    //     warnings: false
+    //   }
+    // })
   ]
 };

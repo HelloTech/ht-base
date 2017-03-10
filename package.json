@@ -17,6 +17,7 @@
     "dev:rebuild:web:server": "better-npm-run dev-rebuild-web-server",
     "dev:debug:web:server": "better-npm-run dev-build-web-server && better-npm-run dev-debug-web-server",
     "prod": "npm run prod:build:client && npm run prod:build:server && npm run prod:start:server",
+    "prod2": "npm run prod:build:server && npm run prod:start:server",
     "prod:build:client": "better-npm-run prod-build-client",
     "prod:build:server": "better-npm-run prod-build-server",
     "prod:start:server": "better-npm-run prod-start-server"
@@ -67,19 +68,19 @@
       }
     },
     "prod-build-client": {
-      "command": "rimraf build && webpack --config webpack.prod.client.config.js && mv build/public/manifest.json build",
+      "command": "rimraf build && webpack -p --config webpack.prod.client.config.js && mv build/public/manifest.json build",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "prod-build-server": {
-      "command": "webpack --config webpack.prod.server.config.js && mv build/public/server.min.js build",
+      "command": "webpack --config webpack.prod.server.config.js && mv build/public/server.js build",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "prod-start-server": {
-      "command": "node build/server.min.js",
+      "command": "node build/server.js",
       "env": {
         "NODE_ENV": "production",
         "HOST": "localhost",
@@ -88,6 +89,7 @@
     }
   },
   "dependencies": {
+    "dot": "^1.1.1",
     "express": "^4.14.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.2",

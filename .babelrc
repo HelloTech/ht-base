@@ -6,7 +6,26 @@
     "react"
   ],
   "plugins": [
+    "react-hot-loader/babel",
     ["transform-runtime", {"polyfill": false, "regenerator": true}],
-    ["lodash"]
-  ]
+    "lodash"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs",
+        "dynamic-import-node"
+      ]
+    }
+//    "production": {
+//      "only": [
+//        "app"
+//      ],
+//      "plugins": [
+//        "transform-react-remove-prop-types",
+//        "transform-react-constant-elements",
+//        "transform-react-inline-elements"
+//      ]
+//    }
+  }
 }

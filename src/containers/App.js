@@ -6,7 +6,14 @@ import WelcomePage from './pages/welcome'
 import AboutPage from './pages/about'
 import ImprintPage from './pages/imprint'
 
-const Root = () => (
+const NoMatch = ({location}) => (
+  <div>
+    <h2>Whoops</h2>
+    <p>Sorry but {location.pathname} failed!!!!!!!!!!!</p>
+  </div>
+);
+
+const App = () => (
   <Layout>
     <Switch>
       <Route exact path="/" component={WelcomePage} />
@@ -17,11 +24,4 @@ const Root = () => (
   </Layout>
 );
 
-export default Root
-
-const NoMatch = ({location}) => (
-  <div>
-    <h2>Whoops</h2>
-    <p>Sorry but {location.pathname} failed!!!!!!!!!!!</p>
-  </div>
-);
+export default App
