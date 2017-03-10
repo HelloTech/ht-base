@@ -32,7 +32,6 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        exclude: [/node_modules/],
         loaders: [
           'style-loader',
           {
@@ -62,12 +61,12 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        context: __dirname,
-        postcss: [autoprefixer({browsers: browserslist})]
-      }
-    }),
+    // new webpack.LoaderOptionsPlugin({
+    //   options: {
+    //     context: __dirname,
+    //     postcss: [autoprefixer({browsers: browserslist})]
+    //   }
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,

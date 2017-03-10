@@ -28,7 +28,6 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        exclude: [ /node_modules/ ],
         use: extractSASS.extract({
           notExtractLoader: 'style-loader',
           use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!sass-loader',
@@ -36,7 +35,6 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [ /node_modules/ ],
         use: extractSASS.extract({
           notExtractLoader: 'style-loader',
           use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!css-loader',
