@@ -3,8 +3,10 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
-
 const browserslist = require('./browserslist');
+
+const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
+const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
 module.exports = {
   entry: {
@@ -27,9 +29,17 @@ module.exports = {
       {
         test: /\.sass$/,
         exclude: [ /node_modules/ ],
-        use: ExtractTextPlugin.extract({
+        use: extractSASS.extract({
           notExtractLoader: 'style-loader',
           use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!sass-loader',
+        })
+      },
+      {
+        test: /\.css$/,
+        exclude: [ /node_modules/ ],
+        use: extractSASS.extract({
+          notExtractLoader: 'style-loader',
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!postcss!css-loader',
         })
       },
       {
@@ -56,10 +66,8 @@ module.exports = {
         warnings: false
       }
     }),
-    new ExtractTextPlugin({
-      filename: '[name]-[hash].min.css',
-      allChunks: true
-    }),
+    extractCSS,
+    extractSASS,
     new ManifestPlugin({}),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',

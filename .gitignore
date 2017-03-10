@@ -1,0 +1,10 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/dbnavigator.xml
+.idea/encodings.xml
+.idea/ht-base.iml
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/watcherTasks.xml
+.idea/workspace.xml
+node_modules/
