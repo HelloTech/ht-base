@@ -5,15 +5,14 @@ import { StaticRouter } from 'react-router'
 import Helmet from "react-helmet"
 const fs = require('fs');
 const baseTemplate = fs.readFileSync('./build/public/index.html');
-console.log(baseTemplate);
 const template = dot.template(baseTemplate);
 import App from "../containers/App"
-import Document from "../containers/document/index"
+// import Document from "../containers/document/index"
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
   const context = {};
-
+  console.log('first');
   // render the first time
   let body = renderToString(
     <StaticRouter location={req.url} context={context}>
@@ -41,7 +40,7 @@ const handleRender = (req, res) => {
       )
     }
     Helmet.rewind();
-    console.log(template({body: body}));
+    console.log('after rewind');
     // res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
     res.write(template({body: body}));
     res.end()

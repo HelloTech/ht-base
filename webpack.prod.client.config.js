@@ -7,7 +7,7 @@ const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
-
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
 const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
@@ -18,11 +18,11 @@ module.exports = {
     vendor: ['react', 'react-dom', 'react-helmet', 'react-router']
   },
   output: {
-    filename: "[name]-[hash].min.js",
+    filename: "[bundle].[name].[chunkhash].min.js",
     publicPath: "/assets/",
     path: "build/public"
   },
-
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -56,6 +56,7 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       "NODE_ENV"
     ]),
+    new ProgressBarPlugin(),
     new webpack.LoaderOptionsPlugin({
       options: {
         context: __dirname,
@@ -63,18 +64,19 @@ module.exports = {
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
+      compress: {
         screw_ie8: true,
         warnings: false
-      }
-    }),
+      },
+      sourceMap: true
+
+}),
     extractCSS,
     extractSASS,
     new InlineManifestWebpackPlugin(),
     new ManifestPlugin({}),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
-      minChunks: Infinity,
       filename: '[name]-[hash].min.js'
     }),
     new HtmlWebpackPlugin({
