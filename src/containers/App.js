@@ -2,22 +2,12 @@ import React from 'react'
 import {Switch, Route } from 'react-router'
 
 import Layout from './layout/index'
-import WelcomePage from './pages/welcome'
+import AsyncRoute from '../lib/AsyncRoute'
 import AboutPage from './pages/about'
 import ImprintPage from './pages/imprint'
-
-const Root = () => (
-  <Layout>
-    <Switch>
-      <Route exact path="/" component={WelcomePage} />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/imprint" component={ImprintPage} />
-      <Route component={NoMatch}/>
-    </Switch>
-  </Layout>
-);
-
-export default Root
+if(global){
+  global.System = { import () {}}
+}
 
 const NoMatch = ({location}) => (
   <div>
@@ -25,3 +15,22 @@ const NoMatch = ({location}) => (
     <p>Sorry but {location.pathname} failed!!!!!!!!!!!</p>
   </div>
 );
+
+const App = () => (
+  <Layout>
+    <Switch>
+      <Route
+        exact path="/"
+        component={
+          (props) =>{
+            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/welcome')}/>)
+          }
+        } />
+      <Route path="/about" component={AboutPage} />
+      <Route path="/imprint" component={ImprintPage} />
+      <Route component={NoMatch}/>
+    </Switch>
+  </Layout>
+);
+
+export default App
