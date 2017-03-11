@@ -76,7 +76,7 @@
     "prod-build-server": {
       "command": "webpack --config webpack.prod.server.config.js && mv build/public/*server.js build",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "server"
       }
     },
     "prod-start-server": {

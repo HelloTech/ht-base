@@ -36,9 +36,13 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin([
-      "NODE_ENV"
-    ]),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV:'"production"',
+        HOST: '"localhost"',
+        PORT: '"3030"'
+      }
+    }),
     // new webpack.optimize.UglifyJsPlugin({
     //   compressor: {
     //     screw_ie8: true,
