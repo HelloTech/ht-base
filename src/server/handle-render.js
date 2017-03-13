@@ -1,19 +1,27 @@
 import React from 'react'
-import dot from 'dot';
+import _ from 'lodash';
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter } from 'react-router'
 import Helmet from "react-helmet"
 const fs = require('fs');
-// const baseTemplate = fs.readFileSync('./build/public/index.html');
-// const template = dot.template(baseTemplate);
+const baseTemplate = fs.readFileSync('./src/containers/document/index.html');
+const template = _.template(baseTemplate);
 import App from "../containers/App"
 import Document from "../containers/document/index"
+import Head from '../containers/document/head'
+import { assetPath } from '../lib/assets';
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
   const context = {};
   console.log('first');
   // render the first time
+  let head = renderToString(
+    <Head head={Helmet.rewind()}/>
+  );
+  let links = renderToString(
+    <script type="text/javascript" src={assetPath("app", "js")}></script>
+  );
   let markup = renderToString(
     <StaticRouter location={req.url} context={context}>
       <App/>
@@ -39,11 +47,10 @@ const handleRender = (req, res) => {
         </StaticRouter>
       )
     }
-    Helmet.rewind();
     console.log('after rewind');
     res.writeHead(200);
-    res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
-    // res.write(template({body: body}));
+    // res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
+    res.write(template({body: markup, head:head, scripts:links}));
     res.end()
   }
 };

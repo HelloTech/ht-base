@@ -2,7 +2,7 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OfflinePlugin = require('offline-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -89,7 +89,7 @@ module.exports = {
     //   template: './containers/document/index.html'
     // }),
     new OfflinePlugin({
-      externals: ['index.html'],
+      externals: ['./containers/document/index.html'],
     })
   ]
     // [
