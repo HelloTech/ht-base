@@ -4,7 +4,8 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter } from 'react-router'
 import Helmet from "react-helmet"
 const fs = require('fs');
-const baseTemplate = fs.readFileSync('./build/public/index.html');
+let index = process.env.NODE_ENV === 'production' ? './build/public/index.html' : './dev/build/public/index.html';
+const baseTemplate = fs.readFileSync(index);
 const template = dot.template(baseTemplate);
 import App from "../containers/App"
 // import Document from "../containers/document/index"
