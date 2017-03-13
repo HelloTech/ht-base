@@ -2,8 +2,11 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OfflinePlugin = require('offline-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+// const HelmetWebpackPlugin = require('helmet-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
@@ -33,8 +36,8 @@ module.exports = {
     rules: [
       {
         test: /\.js?$/,
-        exclude: [ /node_modules/ ],
-        use: [ 'babel-loader' ]
+        exclude: [/node_modules/],
+        use: ['babel-loader']
       },
       {
         test: /\.sass$/,
@@ -52,7 +55,7 @@ module.exports = {
       },
       {
         test: /\.jpg$/,
-        exclude: [ /node_modules/ ],
+        exclude: [/node_modules/],
         use: 'file-loader?name=images/[path][name]-[hash].[ext]&context=src'
       }
     ]
@@ -60,13 +63,13 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {NODE_ENV:'"production"'}
+      'process.env': {NODE_ENV: '"production"'}
     }),
     new ProgressBarPlugin(),
     new webpack.LoaderOptionsPlugin({
       options: {
         context: __dirname,
-        postcss: [ autoprefixer({ browsers: browserslist }) ]
+        postcss: [autoprefixer({browsers: browserslist})]
       }
     }),
     new ManifestPlugin({}),
@@ -77,46 +80,55 @@ module.exports = {
       },
       sourceMap: true
 
-}),
+    }),
     extractCSS,
     extractSASS,
-    // new InlineManifestWebpackPlugin(),
+    new InlineManifestWebpackPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor'],
       filename: '[name]-[hash].min.js'
     }),
-    // new HtmlWebpackPlugin({
-    //   template: './containers/document/index.html'
-    // }),
+    new HtmlWebpackPlugin({
+      template: './containers/document/index.html',
+      favicon: './containers/document/favicon.ico'
+    }),
+    // new CopyWebpackPlugin([
+    //   { from: 'containers/document/index.html', to: '' }
+    // ]),
     new OfflinePlugin({
-      externals: ['./containers/document/index.html'],
+      rewrites: {
+        'index.html': '/'
+      }
     })
   ]
-    // [
-    // new webpack.EnvironmentPlugin([
-    //   "NODE_ENV"
-    // ]),
-    //   new webpack.LoaderOptionsPlugin({
-    //     options: {
-    //       context: __dirname,
-    //       postcss: [ autoprefixer({ browsers: browserslist }) ]
-    //     }
-    //   }),
-    //   new webpack.optimize.UglifyJsPlugin({
-    //     compressor: {
-    //       screw_ie8: true,
-    //       warnings: false
-    //     }
-    //   }),
-    //   new ExtractTextPlugin({
-    //     filename: '[name]-[hash].min.css',
-    //     allChunks: true
-    //   }),
-    //   new ManifestPlugin({}),
-    //   new webpack.optimize.CommonsChunkPlugin({
-    //     name: 'vendor',
-    //     minChunks: Infinity,
-    //     filename: '[name]-[hash].min.js'
-    //   })
-    // ]
+  // new OfflinePlugin({
+  //   externals: ['containers/document/index.html'],
+  // })  ]
+  // [
+  // new webpack.EnvironmentPlugin([
+  //   "NODE_ENV"
+  // ]),
+  //   new webpack.LoaderOptionsPlugin({
+  //     options: {
+  //       context: __dirname,
+  //       postcss: [ autoprefixer({ browsers: browserslist }) ]
+  //     }
+  //   }),
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     compressor: {
+  //       screw_ie8: true,
+  //       warnings: false
+  //     }
+  //   }),
+  //   new ExtractTextPlugin({
+  //     filename: '[name]-[hash].min.css',
+  //     allChunks: true
+  //   }),
+  //   new ManifestPlugin({}),
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'vendor',
+  //     minChunks: Infinity,
+  //     filename: '[name]-[hash].min.js'
+  //   })
+  // ]
 };

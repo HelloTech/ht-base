@@ -89,8 +89,11 @@
     }
   },
   "dependencies": {
+    "copy-webpack-plugin": "^4.0.1",
     "dot": "^1.1.1",
     "express": "^4.14.0",
+    "favicons-webpack-plugin": "^0.0.7",
+    "helmet-webpack-plugin": "^0.0.3",
     "react": "^15.4.1",
     "react-dom": "^15.4.2",
     "react-helmet": "^4.0.0",

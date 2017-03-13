@@ -24,7 +24,7 @@ module.exports = {
         use: [ 'null-loader' ]
       },
       {
-        test: /\.(jpg|ico)$/,
+        test: /\.(jpg)$/,
         exclude: [ /node_modules/ ],
         use: 'file-loader?name=images/[path][name]-[hash].[ext]&context=src'
       },

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>HT React</title>
-  <%=head%>
+  <meta charset="UTF-8">
+  <title>HT React</title>
+  <!--<%=htmlWebpackPlugin.files.webpackManifest%>-->
+  <%=htmlWebpackPlugin.files.webpackManifest%>
 </head>
 <body>
-<div id="app"><%=head%></div>
-<%=scripts%>
+<div id="app">{{=it.body}}</div>
 </body>
 </html>
