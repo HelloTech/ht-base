@@ -5,4 +5,4 @@ import Root from './containers/Root';
 
 render(<Root />, document.getElementById('app'));
 
-// OfflinePluginRuntime.install();
+OfflinePluginRuntime.install();

@@ -4,17 +4,17 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { StaticRouter } from 'react-router'
 import Helmet from "react-helmet"
 const fs = require('fs');
-const baseTemplate = fs.readFileSync('./build/public/index.html');
-const template = dot.template(baseTemplate);
+// const baseTemplate = fs.readFileSync('./build/public/index.html');
+// const template = dot.template(baseTemplate);
 import App from "../containers/App"
-// import Document from "../containers/document/index"
+import Document from "../containers/document/index"
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
   const context = {};
   console.log('first');
   // render the first time
-  let body = renderToString(
+  let markup = renderToString(
     <StaticRouter location={req.url} context={context}>
       <App/>
     </StaticRouter>
@@ -33,7 +33,7 @@ const handleRender = (req, res) => {
     // this time (on the client they know from componentDidMount)
     if (context.missed) {
       res.writeHead(404);
-      body = renderToString(
+      markup = renderToString(
         <StaticRouter location={req.url} context={context}>
           <App/>
         </StaticRouter>
@@ -41,8 +41,9 @@ const handleRender = (req, res) => {
     }
     Helmet.rewind();
     console.log('after rewind');
-    // res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
-    res.write(template({body: body}));
+    res.writeHead(200);
+    res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
+    // res.write(template({body: body}));
     res.end()
   }
 };

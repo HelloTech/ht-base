@@ -19,7 +19,7 @@ module.exports = {
         use: [ 'babel-loader' ]
       },
       {
-        test: /\.sass$/,
+        test: /\.(sass|css)$/,
         exclude: [ /node_modules/ ],
         use: [ 'null-loader' ]
       },

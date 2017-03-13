@@ -8,8 +8,14 @@ const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
-const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
+const extractCSS = new ExtractTextPlugin({
+  filename: '[name]-[hash].min.css',
+  allChunks: true
+});
+const extractSASS = new ExtractTextPlugin({
+  filename: '[name]-[hash]-2.min.css',
+  allChunks: true
+});
 
 module.exports = {
   context: resolve('src'),
@@ -18,7 +24,7 @@ module.exports = {
     vendor: ['react', 'react-dom', 'react-helmet', 'react-router']
   },
   output: {
-    filename: "[bundle].[name].[chunkhash].min.js",
+    filename: "[name].[hash].min.js",
     publicPath: "/assets/",
     path: "build/public"
   },
@@ -63,6 +69,7 @@ module.exports = {
         postcss: [ autoprefixer({ browsers: browserslist }) ]
       }
     }),
+    new ManifestPlugin({}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,
@@ -73,15 +80,43 @@ module.exports = {
 }),
     extractCSS,
     extractSASS,
-    new InlineManifestWebpackPlugin(),
-    new ManifestPlugin({}),
+    // new InlineManifestWebpackPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest'],
+      names: ['vendor'],
       filename: '[name]-[hash].min.js'
     }),
-    new HtmlWebpackPlugin({
-      template: './containers/document/index.html'
-    }),
-    // new OfflinePlugin()
+    // new HtmlWebpackPlugin({
+    //   template: './containers/document/index.html'
+    // }),
+    new OfflinePlugin({
+      externals: ['index.html'],
+    })
   ]
+    // [
+    // new webpack.EnvironmentPlugin([
+    //   "NODE_ENV"
+    // ]),
+    //   new webpack.LoaderOptionsPlugin({
+    //     options: {
+    //       context: __dirname,
+    //       postcss: [ autoprefixer({ browsers: browserslist }) ]
+    //     }
+    //   }),
+    //   new webpack.optimize.UglifyJsPlugin({
+    //     compressor: {
+    //       screw_ie8: true,
+    //       warnings: false
+    //     }
+    //   }),
+    //   new ExtractTextPlugin({
+    //     filename: '[name]-[hash].min.css',
+    //     allChunks: true
+    //   }),
+    //   new ManifestPlugin({}),
+    //   new webpack.optimize.CommonsChunkPlugin({
+    //     name: 'vendor',
+    //     minChunks: Infinity,
+    //     filename: '[name]-[hash].min.js'
+    //   })
+    // ]
 };

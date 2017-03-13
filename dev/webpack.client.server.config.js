@@ -35,22 +35,26 @@ module.exports = {
     rules: [
       {
         test: /\.js?$/,
-        exclude: [/node_modules/],
-        use: ['babel-loader']
-      },
-      {
+        exclude: [ /node_modules/ ],
+        loaders: [ 'babel-loader' ]
+      }, {
         test: /\.sass$/,
-        use: extractSASS.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]!sass-loader',
-        })
-      },
-      {
-        test: /\.css$/,
-        use: extractSASS.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?modules&importLoaders=1&localIdentName=[local]',
-        })
+        exclude: [/node_modules/],
+        loaders: [
+          'style-loader',
+          {
+            loader: "css-loader",
+            query: {sourceMap: true, modules: true, importLoaders: 1, localIdentName: "[local]"}
+          },
+          // uncomment if you need autoprefixer in dev environment
+          // {
+          //   loader: "postcss"
+          // },
+          {
+            loader: "sass-loader",
+            query: {sourceMap: true}
+          }
+        ]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -65,24 +69,38 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.LoaderOptionsPlugin({
-    //   options: {
-    //     context: __dirname,
-    //     postcss: [autoprefixer({browsers: browserslist})]
-    //   }
-    // }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        context: __dirname,
+        postcss: [autoprefixer({browsers: browserslist})]
+      }
+    }),
     // new OfflinePlugin(),
     new InlineManifestWebpackPlugin(),
     new ManifestPlugin({}),
-    extractCSS,
-    extractSASS,
+    // extractCSS,
+    // extractSASS,
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor, manifest',
+      name: 'vendor',
       minChunks: Infinity,
       filename: '[name].js'
     }),
-    new HtmlWebpackPlugin({
-      template: '/Users/pdiniz/work/ht-base/src/containers/document/index.html'
-    })
+    // new HtmlWebpackPlugin({
+    //   template: '/Users/pdiniz/work/ht-base/src/containers/document/index.html'
+    // })
   ]
+  // plugins: [
+  //   new webpack.HotModuleReplacementPlugin(),
+  //   new webpack.LoaderOptionsPlugin({
+  //     options: {
+  //       context: __dirname,
+  //       postcss: [ autoprefixer({ browsers: browserslist }) ]
+  //     }
+  //   }),
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'vendor',
+  //     minChunks: Infinity,
+  //     filename: '[name].js'
+  //   })
+  // ]
 };
