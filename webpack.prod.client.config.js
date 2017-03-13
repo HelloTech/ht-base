@@ -2,21 +2,19 @@ const {resolve} = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OfflinePlugin = require('offline-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-// const HelmetWebpackPlugin = require('helmet-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const extractCSS = new ExtractTextPlugin({
-  filename: '[name]-[hash].min.css',
+  filename: '[name]-[chunkhash].min.css',
   allChunks: true
 });
 const extractSASS = new ExtractTextPlugin({
-  filename: '[name]-[hash]-2.min.css',
+  filename: '[name]-[chunkhash]-2.min.css',
   allChunks: true
 });
 
@@ -27,7 +25,7 @@ module.exports = {
     vendor: ['react', 'react-dom', 'react-helmet', 'react-router']
   },
   output: {
-    filename: "[name].[hash].min.js",
+    filename: "app.[chunkhash].min.js",
     publicPath: "/assets/",
     path: "build/public"
   },
@@ -86,7 +84,7 @@ module.exports = {
     new InlineManifestWebpackPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor'],
-      filename: '[name]-[hash].min.js'
+      filename: 'vendor-[chunkhash].min.js'
     }),
     new HtmlWebpackPlugin({
       template: './containers/document/index.html',

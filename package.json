@@ -1,11 +1,11 @@
 {
-  "name": "react-hmr-ssr-router-boilerplate",
+  "name": "ht-base",
   "version": "0.1.0",
   "description": "Boilerplate code for using SSR, HMR, React Router",
-  "author": "Dennis Schmidt",
+  "author": "HelloTech",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DennisSchmidt/react-hmr-ssr-router-boilerplate.git"
+    "url": ""
   },
   "license": "UNLICENSED",
   "private": true,
