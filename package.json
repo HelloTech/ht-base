@@ -68,7 +68,7 @@
       }
     },
     "prod-build-client": {
-      "command": "rimraf build && webpack -p --config webpack.prod.client.config.js && mv build/public/manifest.json build",
+      "command": "rimraf build && webpack -p --config webpack.prod.client.config.js && cp build/public/manifest.json build",
       "env": {
         "NODE_ENV": "production"
       }

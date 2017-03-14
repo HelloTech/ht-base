@@ -1,12 +1,6 @@
 import React from 'react'
-import {Switch, Route } from 'react-router'
-
-import Layout from './layout/index'
-import AsyncRoute from '../lib/AsyncRoute'
-if(global){
-  global.System = { import () {}}
-}
-
+import {Switch, Route} from 'react-router'
+import * as Routes from '../lib/Route'
 const NoMatch = ({location}) => (
   <div>
     <h2>Whoops</h2>
@@ -14,33 +8,17 @@ const NoMatch = ({location}) => (
   </div>
 );
 
-const App = () => (
+import Layout from './layout/index'
+
+const Root = () => (
   <Layout>
     <Switch>
-      <Route
-        exact path="/"
-        component={
-          (props) =>{
-            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/welcome')}/>)
-          }
-        } />
-      <Route
-        exact path="/about"
-        component={
-          (props) =>{
-            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/about')}/>)
-          }
-        } />
-      <Route
-        exact path="/imprint"
-        component={
-          (props) =>{
-            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/imprint')}/>)
-          }
-        } />
+      <Route exact path="/" component={Routes.WelcomePage}/>
+      <Route path="/about" component={Routes.AboutPage}/>
+      <Route path="/imprint" component={Routes.ImprintPage}/>
       <Route component={NoMatch}/>
     </Switch>
   </Layout>
 );
 
-export default App
+export default Root;

@@ -88,6 +88,10 @@ module.exports = {
       template: './containers/document/index.html',
       favicon: './containers/document/favicon.ico'
     }),
+    new webpack.NormalModuleReplacementPlugin(
+      /\.\.\/lib\/Route/,
+      '../lib/RouteAsync'
+    ),
     // new CopyWebpackPlugin([
     //   { from: 'containers/document/index.html', to: '' }
     // ]),

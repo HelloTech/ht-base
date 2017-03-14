@@ -44,6 +44,7 @@ const handleRender = (req, res) => {
     console.log('after rewind');
     // res.write('<!DOCTYPE html>' + renderToStaticMarkup(<Document head={Helmet.rewind()} content={markup} />));
     res.writeHead(200);
+    console.log(body);
     res.write(template({body: body}));
     res.end()
   }
