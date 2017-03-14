@@ -50,7 +50,7 @@
       }
     },
     "dev-rebuild-web-server": {
-      "command": "just-wait -p \"dev/build/public/index.html\" && webpack --watch --config dev/webpack.web.server.config.js",
+      "command": "webpack --watch --config dev/webpack.web.server.config.js",
       "env": {
         "NODE_ENV": "development",
         "CLIENT_HOST": "localhost",
