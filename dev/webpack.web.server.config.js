@@ -21,7 +21,6 @@ module.exports = {
       },
       {
         test: /\.json?$/,
-
         use: [ 'json-loader' ]
       },
       {
@@ -40,6 +39,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // new webpack.IgnorePlugin(/manifest.json/),
+    new webpack.IgnorePlugin(/manifest.json/),
   ]
 };

@@ -10,7 +10,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev": "concurrently -p pid --kill-others \"npm run dev:start:web:server\" \"npm run dev:start:client:server\" \"npm run dev:rebuild:web:server\"",
+    "dev": "concurrently -p pid --kill-others \"npm run dev:start:client:server\" \"npm run dev:rebuild:web:server\" \"npm run dev:start:web:server\"",
     "dev:start:client:server": "better-npm-run dev-start-client-server",
     "dev:start:web:server": "better-npm-run dev-build-web-server && better-npm-run dev-start-web-server",
     "dev:build:web:server": "better-npm-run dev-build-web-server",
@@ -32,7 +32,7 @@
       }
     },
     "dev-start-web-server": {
-      "command": "babel-watch dev/build/server.js",
+      "command": "just-wait -p \"dev/build/public/index.html\" && babel-watch dev/build/server.js",
       "env": {
         "NODE_ENV": "development",
         "HOST": "localhost",
@@ -50,7 +50,7 @@
       }
     },
     "dev-rebuild-web-server": {
-      "command": "webpack --watch --config dev/webpack.web.server.config.js",
+      "command": "just-wait -p \"dev/build/public/index.html\" && webpack --watch --config dev/webpack.web.server.config.js",
       "env": {
         "NODE_ENV": "development",
         "CLIENT_HOST": "localhost",
@@ -95,6 +95,7 @@
     "favicons-webpack-plugin": "^0.0.7",
     "helmet-webpack-plugin": "^0.0.3",
     "html-webpack-harddisk-plugin": "^0.1.0",
+    "just-wait": "^1.0.11",
     "react": "^15.4.1",
     "react-dom": "^15.4.2",
     "react-helmet": "^4.0.0",

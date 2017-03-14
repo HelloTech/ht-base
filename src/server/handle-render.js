@@ -8,7 +8,7 @@ let index = process.env.NODE_ENV === 'production' ? './build/public/index.html' 
 const baseTemplate = fs.readFileSync(index);
 const template = dot.template(baseTemplate);
 import App from "../containers/App"
-// import Document from "../containers/document/index"
+
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render

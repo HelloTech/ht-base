@@ -4,7 +4,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OfflinePlugin = require('offline-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const browserslist = require('./browserslist');
@@ -46,7 +45,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: extractSASS.extract({
+        use: extractCSS.extract({
           fallback: 'style-loader',
           use: 'css-loader?modules&importLoaders=1&localIdentName=[local]',
         })
@@ -77,7 +76,6 @@ module.exports = {
         warnings: false
       },
       sourceMap: true
-
     }),
     extractCSS,
     extractSASS,

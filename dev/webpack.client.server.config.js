@@ -5,10 +5,10 @@ const browserslist = require('../browserslist');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
-const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
+// const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+// const ManifestPlugin = require('webpack-manifest-plugin');
+// const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
+// const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
 module.exports = {
   entry: {
