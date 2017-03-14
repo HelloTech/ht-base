@@ -2,7 +2,11 @@ import React from 'react'
 import Head from './head'
 import { assetPath } from '../../lib/assets'
 
-const Document = ({head,content,children}) => (
+const Document = ({
+  head,
+  content,
+  children
+}) => (
   <html>
     <Head head={head} />
     <body>

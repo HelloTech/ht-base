@@ -1,29 +1,30 @@
 {
-  "name": "react-hmr-ssr-router-boilerplate",
+  "name": "ht-base",
   "version": "0.1.0",
   "description": "Boilerplate code for using SSR, HMR, React Router",
-  "author": "Dennis Schmidt",
+  "author": "HelloTech",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DennisSchmidt/react-hmr-ssr-router-boilerplate.git"
+    "url": ""
   },
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev": "concurrently -p pid --kill-others \"npm run dev:start:client:server\" \"npm run dev:start:web:server\" \"npm run dev:rebuild:web:server\"",
+    "dev": "concurrently -p pid --kill-others \"npm run dev:start:web:server\" \"npm run dev:start:client:server\" \"npm run dev:rebuild:web:server\"",
     "dev:start:client:server": "better-npm-run dev-start-client-server",
     "dev:start:web:server": "better-npm-run dev-build-web-server && better-npm-run dev-start-web-server",
     "dev:build:web:server": "better-npm-run dev-build-web-server",
     "dev:rebuild:web:server": "better-npm-run dev-rebuild-web-server",
     "dev:debug:web:server": "better-npm-run dev-build-web-server && better-npm-run dev-debug-web-server",
     "prod": "npm run prod:build:client && npm run prod:build:server && npm run prod:start:server",
+    "prod2": "npm run prod:build:server && npm run prod:start:server",
     "prod:build:client": "better-npm-run prod-build-client",
     "prod:build:server": "better-npm-run prod-build-server",
     "prod:start:server": "better-npm-run prod-start-server"
   },
   "betterScripts": {
     "dev-start-client-server": {
-      "command": "babel-node dev/client.server.js",
+      "command": "rimraf dev/build && babel-node dev/client.server.js",
       "env": {
         "NODE_ENV": "development",
         "HOST": "localhost",
@@ -41,7 +42,7 @@
       }
     },
     "dev-build-web-server": {
-      "command": "rimraf dev/build && webpack --config dev/webpack.web.server.config.js",
+      "command": "webpack --config dev/webpack.web.server.config.js",
       "env": {
         "NODE_ENV": "development",
         "CLIENT_HOST": "localhost",
@@ -67,19 +68,19 @@
       }
     },
     "prod-build-client": {
-      "command": "rimraf build && webpack --config webpack.prod.client.config.js && mv build/public/manifest.json build",
+      "command": "rimraf build && webpack -p --config webpack.prod.client.config.js && mv build/public/manifest.json build",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "prod-build-server": {
-      "command": "webpack --config webpack.prod.server.config.js && mv build/public/server.min.js build",
+      "command": "webpack --config webpack.prod.server.config.js && mv build/public/*server.js build",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "server"
       }
     },
     "prod-start-server": {
-      "command": "node build/server.min.js",
+      "command": "node build/server.js",
       "env": {
         "NODE_ENV": "production",
         "HOST": "localhost",
@@ -88,7 +89,12 @@
     }
   },
   "dependencies": {
+    "copy-webpack-plugin": "^4.0.1",
+    "dot": "^1.1.1",
     "express": "^4.14.0",
+    "favicons-webpack-plugin": "^0.0.7",
+    "helmet-webpack-plugin": "^0.0.3",
+    "html-webpack-harddisk-plugin": "^0.1.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.2",
     "react-helmet": "^4.0.0",

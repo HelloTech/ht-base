@@ -3,8 +3,6 @@ import {Switch, Route } from 'react-router'
 
 import Layout from './layout/index'
 import AsyncRoute from '../lib/AsyncRoute'
-import AboutPage from './pages/about'
-import ImprintPage from './pages/imprint'
 if(global){
   global.System = { import () {}}
 }
@@ -26,8 +24,20 @@ const App = () => (
             return (<AsyncRoute props={props} loadingPromise={System.import('./pages/welcome')}/>)
           }
         } />
-      <Route path="/about" component={AboutPage} />
-      <Route path="/imprint" component={ImprintPage} />
+      <Route
+        exact path="/about"
+        component={
+          (props) =>{
+            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/about')}/>)
+          }
+        } />
+      <Route
+        exact path="/imprint"
+        component={
+          (props) =>{
+            return (<AsyncRoute props={props} loadingPromise={System.import('./pages/imprint')}/>)
+          }
+        } />
       <Route component={NoMatch}/>
     </Switch>
   </Layout>

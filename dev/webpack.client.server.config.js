@@ -2,6 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const browserslist = require('../browserslist');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
+const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
 module.exports = {
   entry: {
@@ -27,11 +34,11 @@ module.exports = {
     rules: [
       {
         test: /\.js?$/,
-        exclude: [/node_modules/],
-        use: ['babel-loader']
-      },
-      {
+        exclude: [ /node_modules/ ],
+        loaders: [ 'babel-loader' ]
+      }, {
         test: /\.sass$/,
+        exclude: [/node_modules/],
         loaders: [
           'style-loader',
           {
@@ -40,7 +47,7 @@ module.exports = {
           },
           // uncomment if you need autoprefixer in dev environment
           // {
-          //   use: "postcss"
+          //   loader: "postcss"
           // },
           {
             loader: "sass-loader",
@@ -67,10 +74,26 @@ module.exports = {
     //     postcss: [autoprefixer({browsers: browserslist})]
     //   }
     // }),
+    // new OfflinePlugin(),
+    // new InlineManifestWebpackPlugin(),
+    // new ManifestPlugin({}),
+    // extractCSS,
+    // extractSASS,
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
       filename: '[name].js'
-    })
+    }),
+    new webpack.NamedModulesPlugin(),
+    new HtmlWebpackHarddiskPlugin({
+      outputPath: path.resolve(__dirname, 'build/public')
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/containers/document/index.html',
+      favicon: './src/containers/document/favicon.ico',
+      alwaysWriteToDisk: true,
+      minify: false,
+      cache: false
+    }),
   ]
 };
