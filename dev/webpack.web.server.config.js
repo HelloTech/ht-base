@@ -24,8 +24,7 @@ module.exports = {
         use: [ 'json-loader' ]
       },
       {
-        test: /\.sass$/,
-        exclude: [ /node_modules/ ],
+        test: /\.s?(css)$/,
         use: [ 'null-loader' ]
       },
       {

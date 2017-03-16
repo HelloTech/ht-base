@@ -1,13 +1,17 @@
 {
   "presets": [
-    ["es2015", {"modules": false}],
+    [
+      "es2015",
+      {
+        "modules": false
+      }
+    ],
     "es2017",
     "stage-2",
     "react"
   ],
   "plugins": [
-    "react-hot-loader/babel",
-    ["transform-runtime", {"polyfill": false, "regenerator": true}],
+    "transform-function-bind",
     "lodash"
   ],
   "env": {
@@ -19,18 +23,26 @@
     },
     "server": {
       "plugins": [
-        "transform-es2015-modules-commonjs"
+        [
+          "css-modules-transform",
+          {
+            "generateScopedName": "[path][name]__[local]--[hash:base64:5]",
+            "extensions": [
+              ".scss", ".css"
+            ]
+          }
+        ]
       ]
     }
-//    "production": {
-//      "only": [
-//        "app"
-//      ],
-//      "plugins": [
-//        "transform-react-remove-prop-types",
-//        "transform-react-constant-elements",
-//        "transform-react-inline-elements"
-//      ]
-//    }
+    //    "production": {
+    //      "only": [
+    //        "app"
+    //      ],
+    //      "plugins": [
+    //        "transform-react-remove-prop-types",
+    //        "transform-react-constant-elements",
+    //        "transform-react-inline-elements"
+    //      ]
+    //    }
   }
 }

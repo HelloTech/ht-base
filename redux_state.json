@@ -1,0 +1,166 @@
+{
+  "user": {
+    "id": 1,
+    "type": "Client",
+    "email": "foo@bar.baz"
+  },
+  "pages": {
+    "home": {
+
+    },
+    "tutorial": {
+      "step": 0
+    }
+  },
+  "entities": {
+    "historyOrders": []
+  },
+  "currentCartService": {
+    "sku_id": 242,
+    "questions": [
+      {
+        "id": 356,
+        "answer": {
+          "id": 1096
+        }
+      }
+    ]
+  },
+  "cart": {
+    "version": 1,
+    "stage": "checkout",
+    "items": [
+      {
+        "type": "service",
+        "sku_id": 243,
+        "questions": [
+          {
+            "id": 356,
+            "answer": {
+              "id": 1096
+            }
+          },
+          {
+            "id": 357,
+            "answers": [
+              {
+                "id": 1103
+              },
+              {
+                "id": 1104,
+                "quantity": 2
+              }
+            ]
+          },
+          {
+            "id": 337,
+            "answer": {
+              "text": "Hang it above my wall"
+            }
+          }
+        ]
+      },
+      {
+        "type": "plan",
+        "plan_id": "20",
+        "billing_period": "year"
+      }
+    ],
+    "coupon": {
+      "id": 123,
+      "code": "hello-coupon",
+      "price": -60
+    },
+    "breakdown": {
+      "services": [
+        {
+          "name": "Tv Wall Mount Installation",
+          "price": 50,
+          "addons": [
+            {
+              "name": "dismount",
+              "price": 30
+            }
+          ]
+        }
+      ],
+      "plan": {
+        "name": "Basic",
+        "price": 50
+      },
+      "coupon": {
+        "name": "hello-coupon",
+        "price": -60
+      },
+      "subTotal": 100,
+      "tax": 50,
+      "total": 150
+    },
+    "availability": [
+      {
+        "date": "2017-03-24",
+        "fromTime": "17",
+        "toTime": null,
+        "rangeMode": false
+      },
+      {
+        "date": "2017-03-25",
+        "fromTime": "17",
+        "toTime": "19",
+        "rangeMode": true
+      }
+    ],
+    "address": {
+      "address1": "Sunset Trailer Ct, Anchorage",
+      "address2": "apt 30",
+      "details": "neighbour has a rabid dog"
+    },
+    "phone": "9178117460",
+    "card": {
+      "id": 123,
+      "lastDigits": "1234"
+    }
+  },
+  "sidebar": {
+    "open": true,
+    "mainItems": [
+      {
+        "active": true,
+        "name": "Computer Services",
+        "headerSubItem": {
+          "name": "Computer Services",
+          "link": "/8-computer-services"
+        },
+        "subItems": [
+          {
+            "name": "Computer Repair & Help",
+            "link": "/8-computer-services/16-computer-repair"
+          },
+          {
+            "name": "Virus Removal And Cleanup",
+            "link": "/8-computer-services/20-computer-repair"
+          }
+        ]
+      },
+      {
+        "active": false,
+        "name": "View Plans",
+        "link": "plans"
+      }
+    ],
+    "headerSubItem": {
+      "name": "Sign In",
+      "link": "/sign-in"
+    },
+    "subItems": [
+      {
+        "name": "Tech Support Plans",
+        "link": "/plans"
+      },
+      {
+        "name": "Meet Our Techs",
+        "link": "/meet-our-techs"
+      }
+    ]
+  }
+}

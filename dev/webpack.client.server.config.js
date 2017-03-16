@@ -2,13 +2,24 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const browserslist = require('../browserslist');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
+// const extractVendorCSSPlugin = new ExtractTextPlugin('vendor.[contenthash].css');
+const cssnext = require('postcss-cssnext');
+const postcssFocus = require('postcss-focus');
+const postcssReporter = require('postcss-reporter');
+
+// const isBuildingDll = Boolean(process.env.BUILDING_DLL);
+
+// const vendorCSSLoaders = extractVendorCSSPlugin.extract({
+//   fallback: 'style-loader',
+//   use: ['css-loader', 'sass-loader'],
+// });
 // const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 // const ManifestPlugin = require('webpack-manifest-plugin');
 // const extractCSS = new ExtractTextPlugin('styles.[name].[chunkhash].css');
-// const extractSASS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
+// const extractSCSS = new ExtractTextPlugin('styles.[name]-two.[chunkhash].css');
 
 module.exports = {
   entry: {
@@ -36,25 +47,62 @@ module.exports = {
         test: /\.js?$/,
         exclude: [ /node_modules/ ],
         loaders: [ 'babel-loader' ]
-      }, {
-        test: /\.sass$/,
-        exclude: [/node_modules/],
-        loaders: [
+      },
+      {
+        test: /\.s?(css)$/,
+        use: [
           'style-loader',
           {
             loader: "css-loader",
-            query: {sourceMap: true, modules: true, importLoaders: 1, localIdentName: "[local]"}
+            query: {
+              modules: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              importLoaders: true,
+              // sourceMap: true
+            }
           },
-          // uncomment if you need autoprefixer in dev environment
-          // {
-          //   loader: "postcss"
-          // },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => {
+                return [
+                  postcssFocus(), // Add a :focus to every :hover
+                  cssnext({ // Allow future CSS features to be used, also auto-prefixes the CSS...
+                    browsers: ['last 2 versions', 'IE > 10'], // ...based on this browser list
+                  }),
+                  postcssReporter({ // Posts messages from plugins to the terminal
+                    clearMessages: true,
+                  }),
+                ];
+              },
+            },
+          },
           {
             loader: "sass-loader",
-            query: {sourceMap: true}
           }
-        ]
+          ],
       },
+      // {
+      //   test: /\.css$/,
+      //   exclude: [/node_modules/],
+      //   loaders: [
+      //     'style-loader',
+      //     {
+      //       loader: "css-loader",
+      //       query: {sourceMap: true, modules: true, importLoaders: 1, localIndentName: "[local]"}
+      //     },
+      //     // uncomment if you need autoprefixer in dev environment
+      //     // {
+      //     //   loader: "postcss"
+      //     // },
+      //   ]
+      // },
+      // {
+      //   // Transform 3rd party css into an external stylesheet (vendor.[contenthash].css)
+      //   test: /\.s?css$/,
+      //   include: /node_modules/,
+      //   use: vendorCSSLoaders,
+      // },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         use: 'file-loader',
@@ -78,12 +126,13 @@ module.exports = {
     // new InlineManifestWebpackPlugin(),
     // new ManifestPlugin({}),
     // extractCSS,
-    // extractSASS,
+    // extractSCSS,
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: Infinity,
       filename: '[name].js'
     }),
+    // extractVendorCSSPlugin,
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackHarddiskPlugin({
       outputPath: path.resolve(__dirname, 'build/public')

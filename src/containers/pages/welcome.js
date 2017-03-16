@@ -5,7 +5,7 @@ import Image from './hero.jpg'
 
 const Welcome = () => (
   <div>
-    <h1 className="welcome">Welcome users</h1>
+    <h1 className="welcome">Welcome users!!</h1>
     <img src={Image} />
   </div>
 );
