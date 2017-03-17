@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router';
+import {Switch, Route} from 'react-router-dom';
 import * as Routes from './route';
 import Layout from './containers/layout/index';
 // import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
@@ -15,7 +15,9 @@ const NoMatch = ({location}) => (
 );
 
 
-const App = () => (
+const App = () => {
+  console.log(this);
+  return (
     <Layout>
       <Switch>
         <Route exact path='/' component={Routes.HomePage}/>
@@ -28,7 +30,8 @@ const App = () => (
         <Route component={NoMatch}/>
       </Switch>
     </Layout>
-);
+  );
+};
 
 export default App;
 

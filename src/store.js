@@ -3,11 +3,11 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import { combineReducers } from 'redux-immutable';
-import { fromJS } from 'immutable';
-import { routerMiddleware } from 'react-router-redux';
+import Immutable from 'immutable'
+import { ConnectedRouter, routerMiddleware, connectRouter } from 'connected-react-router/immutable'
+// import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
-import createReducer from './reducers';
+import rootReducer from './reducers/index';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,6 +15,7 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
+  const initState = Immutable.Map();
   const middlewares = [
     sagaMiddleware,
     routerMiddleware(history)
@@ -32,11 +33,15 @@ export default function configureStore(initialState = {}, history) {
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
   /* eslint-enable */
-
+  // const rootReducer = createReducer();
   const store = createStore(
-    createReducer(),
-    fromJS(initialState),
-    composeEnhancers(...enhancers)
+    connectRouter(history)(rootReducer),
+    initState,
+    compose(
+      applyMiddleware(
+        routerMiddleware(history),
+      ),
+    ),
   );
 
   // Extensions
@@ -46,8 +51,8 @@ export default function configureStore(initialState = {}, history) {
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {
-    module.hot.accept('./reducers', () => {
-      System.import('./reducers').then((reducerModule) => {
+    module.hot.accept('./reducers/index.js', () => {
+      System.import('./reducers/index.js').then((reducerModule) => {
         const createReducers = reducerModule.default;
         const nextReducers = createReducers(store.asyncReducers);
 

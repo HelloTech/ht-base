@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { itemClicked } from '../actions';
 import { HeaderSubItemButton } from '../elements';
 

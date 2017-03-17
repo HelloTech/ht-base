@@ -2,33 +2,34 @@ import React from 'react';
 import dot from 'dot';
 import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from 'react-router';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import styleSheet from 'styled-components/lib/models/StyleSheet';
 import Helmet from 'react-helmet';
 import configureStore from '../store';
+import { ConnectedRouter, routerMiddleware, connectRouter, push } from 'connected-react-router/immutable'
+import {Provider} from 'react-redux'
 import createHistory from 'history/createMemoryHistory';
 const fs = require('fs');
 let index = process.env.NODE_ENV === 'production' ? './build/public/index.html' : './dev/build/public/index.html';
 const baseTemplate = fs.readFileSync(index);
 const template = dot.template(baseTemplate);
-import App from "../App"
+import Root from "../Root"
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
-  const memoryHistory = createHistory(req.url);
-  const store = configureStore({}, memoryHistory);
+  // const staticHistory = createHistory(req.url);
   const context = {};
   // render the first time
   // styleSheet.flush();
+  // console.log(memoryHistory);
+  const staticRouter = new StaticRouter();
+  staticRouter.props = { location: req.url, context: {}, basename: '' };
+  const { props: { history: staticHistory } } = staticRouter.render();
+  const store = configureStore({}, staticHistory);
   let body = renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <Provider store={store}>
-        <ConnectedRouter history={memoryHistory}>
-          <App/>
-        </ConnectedRouter>
-      </Provider>
-    </StaticRouter>
+    <Provider store={store}>
+      <ConnectedRouter history={staticHistory}>
+        <Root />
+      </ConnectedRouter>
+    </Provider>
   );
   console.log('context = ', context);
   // context.url will contain the URL to redirect to if a <Redirect> was used
