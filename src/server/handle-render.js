@@ -15,13 +15,12 @@ import App from "../App"
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
-  const staticHistory = createHistory(req.url);
   const context = {};
+  // const staticHistory = createHistory(req.url);
   // render the first time
-  // const staticRouter = new StaticRouter();
-  // staticRouter.props = { location: req.url, context: {}, basename: '' };
-  // const { props: { history: staticHistory } } = staticRouter.render();
-  console.log(staticHistory);
+  const staticRouter = new StaticRouter();
+  staticRouter.props = { location: req.url, context: {}, basename: '' };
+  const { props: { history: staticHistory } } = staticRouter.render();
   const store = configureStore({}, staticHistory);
   let body = renderToString(
     <Root store={store} history={staticHistory} />
@@ -50,7 +49,6 @@ const handleRender = (req, res) => {
     // const styles = styleSheet.rules().map(rule => rule.cssText).join('\n');
     res.writeHead(200);
     let text = template({body: body});
-    console.log(text);
     res.write(text);
     res.end()
   }

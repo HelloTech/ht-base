@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
+import { push } from 'connected-react-router';
 import { itemClicked } from '../actions';
 import { SubItemButton } from '../elements';
 
@@ -11,7 +11,7 @@ class SubItem extends React.Component {
       event.preventDefault();
       this.props.itemClicked(item);
       if (item.get('link')) {
-        push(item.get('link'));
+        this.props.push(item.get('link'));
       }
     };
   }

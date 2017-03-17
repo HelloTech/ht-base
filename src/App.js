@@ -7,14 +7,6 @@ import Layout from './containers/layout/index';
 // import configureStore from './store'
 // const store = configureStore();
 
-const NoMatch = ({location}) => (
-  <div>
-    <h2>Whoops</h2>
-    <p>Sorry but {location.pathname} failed!!!!!!!!!!!</p>
-  </div>
-);
-
-
 const App = () => {
   return (
     <Layout>
@@ -26,43 +18,9 @@ const App = () => {
         <Route path='/plans' component={Routes.PlansPage}/>
         <Route path='/plans/:name' component={Routes.PlanPage}/>
         <Route component={Routes.NotFoundPage}/>
-        <Route component={NoMatch}/>
       </Switch>
     </Layout>
   );
 };
 
 export default App;
-
-
-
-// import React from 'react';
-// import routes from './route';
-// import Layout from './containers/layout/index';
-//
-// const NoMatch = ({location}) => (
-//   <div>
-//     <h2>Whoops</h2>
-//     <p>Sorry but {location.pathname} failed!!!!!!!!!!!</p>
-//   </div>
-// );
-//
-//
-// const App = () => {
-//   return (
-//     <Layout>
-//       <Switch>
-//         <Route exact path='/' component={HomePage}/>
-//         <Route path='/login' component={LoginPage}/>
-//         <Route path='/tech-support/for' component={SkuPage}/>
-//         <Route path='/tech-support/category' component={SkuCategoryPage}/>
-//         <Route path='/plans' component={PlansPage}/>
-//         <Route path='/plans/:name' component={PlanPage}/>
-//         <Route component={NotFoundPage}/>
-//       </Switch>
-//     </Layout>
-//   );
-// };
-//
-// export default App;
-//

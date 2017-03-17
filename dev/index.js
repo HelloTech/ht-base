@@ -6,7 +6,6 @@ import configureStore from '../src/store'
 import { AppContainer } from 'react-hot-loader'
 import Root from '../src/Root'
 const history = createBrowserHistory();
-console.log(history);
 const store = configureStore({}, history);
 const render = () => {
   ReactDOM.render(

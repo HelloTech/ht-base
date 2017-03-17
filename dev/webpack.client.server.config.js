@@ -29,7 +29,7 @@ module.exports = {
       'react-hot-loader/patch',
       './dev/index.js'
     ],
-    vendor: ['react', 'react-dom', 'react-helmet']
+    vendor: ['react', 'react-dom', 'react-helmet', 'react-router', 'react-router-dom']
   },
   output: {
     filename: "[name].js",

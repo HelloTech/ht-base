@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import { LOCATION_CHANGE } from 'react-router-redux';
+// import { LOCATION_CHANGE } from 'react-router-redux';
 import { NEW_ROUTE_SCHEMA } from '../../constants/common';
 import { USER_LOADED } from '../../containers/App/constants';
 import {
@@ -30,35 +30,35 @@ function reducer(state = initialState, action) {
       }
       return state.set('mainItems', fromJS([...action.routes, MAIN_PLAN_ITEM]));
     }
-    case LOCATION_CHANGE: {
-      const link = action.payload.pathname;
-      const newState = state.asMutable();
-      let currentMainItem = null;
-      newState.set('preview', true);
-      newState.set('open', false);
-      newState.get('mainItems').forEach((mainItem, index) => {
-        if (mainItem.get('link')) {
-          newState.setIn(['mainItems', index, 'active'], mainItem.get('link') === link);
-          if (mainItem.get('link') === link) {
-            currentMainItem = mainItem;
-          }
-        } else {
-          let subItemHasLink = false;
-          mainItem.get('subItems').forEach((subItem) => {
-            if (subItem.get('link') === link) {
-              subItemHasLink = true;
-              currentMainItem = mainItem;
-            }
-          });
-          newState.setIn(['mainItems', index, 'active'], subItemHasLink);
-        }
-      });
-      newState.set('subItems', (currentMainItem && currentMainItem.get('subItems')) || fromJS(DEFAULT_SUB_ITEMS));
-      newState.get('subItems').forEach((subItem, index) => {
-        newState.setIn(['subItems', index, 'active'], subItem.get('link') === link);
-      });
-      return newState.asImmutable();
-    }
+    // case LOCATION_CHANGE: {
+    //   const link = action.payload.pathname;
+    //   const newState = state.asMutable();
+    //   let currentMainItem = null;
+    //   newState.set('preview', true);
+    //   newState.set('open', false);
+    //   newState.get('mainItems').forEach((mainItem, index) => {
+    //     if (mainItem.get('link')) {
+    //       newState.setIn(['mainItems', index, 'active'], mainItem.get('link') === link);
+    //       if (mainItem.get('link') === link) {
+    //         currentMainItem = mainItem;
+    //       }
+    //     } else {
+    //       let subItemHasLink = false;
+    //       mainItem.get('subItems').forEach((subItem) => {
+    //         if (subItem.get('link') === link) {
+    //           subItemHasLink = true;
+    //           currentMainItem = mainItem;
+    //         }
+    //       });
+    //       newState.setIn(['mainItems', index, 'active'], subItemHasLink);
+    //     }
+    //   });
+    //   newState.set('subItems', (currentMainItem && currentMainItem.get('subItems')) || fromJS(DEFAULT_SUB_ITEMS));
+    //   newState.get('subItems').forEach((subItem, index) => {
+    //     newState.setIn(['subItems', index, 'active'], subItem.get('link') === link);
+    //   });
+    //   return newState.asImmutable();
+    // }
     case ITEM_CLICKED: {
       if (action.item.get('link')) {
         return state;

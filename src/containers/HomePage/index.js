@@ -14,7 +14,6 @@ class HomePage extends Component { // eslint-disable-line react/prefer-stateless
     this.props.displayErrors({ data: { errors: ['Something wrong has happened 0..'] } });
     this.props.displayErrors({ data: { errors: ['Something wrong has happened 1..'] } });
     this.props.displayErrors({ data: { errors: ['Something wrong has happened 2..'] } });
-    console.log(this)
   }
 
   render() {

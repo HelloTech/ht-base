@@ -2,10 +2,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import Root from './Root';
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 import configureStore from './store'
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 const store = configureStore({}, history);
 // render the first time

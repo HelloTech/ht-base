@@ -1,6 +1,4 @@
 import React from 'react'
-const {object} = React.PropTypes;
-
 
 const asyncRoute = function(getComponent) {
   return class AsyncComponent extends React.Component {
