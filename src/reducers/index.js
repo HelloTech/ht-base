@@ -2,7 +2,6 @@
  * Combine all reducers in this file and export the combined reducers.
  * If we were to do this in store.js, reducers wouldn't be hot reloadable.
  */
-import {LOCATION_CHANGE} from 'react-router-redux';
 import { ConnectedRouter, routerMiddleware, connectRouter } from 'connected-react-router/immutable';
 import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
@@ -16,7 +15,6 @@ import pages from './pages';
 const routeSchemaInitialState = fromJS({
   skuCategories: [],
 });
-
 
 function routeSchemaReducer(state = routeSchemaInitialState, action) {
   switch (action.type) {
@@ -60,20 +58,14 @@ function userReducer(state = null, action) {
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
-// export default function createReducer(asyncReducers) {
-//   return combineReducers({
-//     // router: routerReducer,
-//     user: userReducer,
-//     auth: authReducer,
-//     routesSchema: routeSchemaReducer,
-//     components: components(),
-//     entities: entities(),
-//     pages: pages(),
-//     // ...asyncReducers,
-//   });
-// }
-
-const rootReducer = combineReducers({
-  user: userReducer
-});
-export default rootReducer;
+export default function createReducer(asyncReducers) {
+  return combineReducers({
+    user: userReducer,
+    auth: authReducer,
+    routesSchema: routeSchemaReducer,
+    components: components(),
+    entities: entities(),
+    pages: pages(),
+    ...asyncReducers,
+  });
+}

@@ -16,7 +16,6 @@ const NoMatch = ({location}) => (
 
 
 const App = () => {
-  console.log(this);
   return (
     <Layout>
       <Switch>

@@ -4,32 +4,27 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter } from 'react-router';
 import Helmet from 'react-helmet';
 import configureStore from '../store';
-import { ConnectedRouter, routerMiddleware, connectRouter, push } from 'connected-react-router/immutable'
-import {Provider} from 'react-redux'
 import createHistory from 'history/createMemoryHistory';
 const fs = require('fs');
 let index = process.env.NODE_ENV === 'production' ? './build/public/index.html' : './dev/build/public/index.html';
+import rootReducer from '../reducers/index'
 const baseTemplate = fs.readFileSync(index);
 const template = dot.template(baseTemplate);
 import Root from "../Root"
+import App from "../App"
 
 const handleRender = (req, res) => {
   // This context object contains the results of the render
-  // const staticHistory = createHistory(req.url);
+  const staticHistory = createHistory(req.url);
   const context = {};
   // render the first time
-  // styleSheet.flush();
-  // console.log(memoryHistory);
-  const staticRouter = new StaticRouter();
-  staticRouter.props = { location: req.url, context: {}, basename: '' };
-  const { props: { history: staticHistory } } = staticRouter.render();
+  // const staticRouter = new StaticRouter();
+  // staticRouter.props = { location: req.url, context: {}, basename: '' };
+  // const { props: { history: staticHistory } } = staticRouter.render();
+  console.log(staticHistory);
   const store = configureStore({}, staticHistory);
   let body = renderToString(
-    <Provider store={store}>
-      <ConnectedRouter history={staticHistory}>
-        <Root />
-      </ConnectedRouter>
-    </Provider>
+    <Root store={store} history={staticHistory} />
   );
   console.log('context = ', context);
   // context.url will contain the URL to redirect to if a <Redirect> was used
@@ -47,7 +42,7 @@ const handleRender = (req, res) => {
       res.writeHead(404);
       body = renderToString(
         <StaticRouter location={req.url} context={context}>
-          <App/>
+          <App />
         </StaticRouter>
       )
     }
