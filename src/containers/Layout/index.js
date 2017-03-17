@@ -48,29 +48,3 @@ class Layout extends React.Component { // eslint-disable-line react/prefer-state
 }
 
 export default connect(null, { loadUser })(Layout);
-
-
-
-// import React from 'react'
-// import Helmet from "react-helmet"
-//
-// import { Link } from 'react-router-dom'
-//
-// const Layout = ({children}) => (
-//   <div>
-//
-//     <nav>
-//       <ul>
-//         <li><Link to="/">Welcome Page</Link></li>
-//         <li><Link to="/about">About</Link></li>
-//         <li><Link to="/imprint">Imprint</Link></li>
-//         <li><Link to="/not-matching-route">Not Matching Route</Link></li>
-//       </ul>
-//       <hr />
-//     </nav>
-//     <main>{children}</main>
-//     <footer>Footer</footer>
-//   </div>
-// );
-
-// export default Layout

@@ -3,7 +3,7 @@
  */
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import Immutable from 'immutable'
+import {fromJS} from 'immutable';
 import { ConnectedRouter, routerMiddleware, connectRouter } from 'connected-react-router/immutable'
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers/index';
@@ -14,7 +14,6 @@ export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
-  const initState = Immutable.Map();
     // If Redux DevTools Extension is installed use it, otherwise use Redux compose
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers =
@@ -26,7 +25,7 @@ export default function configureStore(initialState = {}, history) {
   // const rootReducer = createReducer();
   const store = createStore(
     connectRouter(history)(createReducer()),
-    initState,
+    fromJS(initialState),
     composeEnhancers(
       applyMiddleware(
         sagaMiddleware,
